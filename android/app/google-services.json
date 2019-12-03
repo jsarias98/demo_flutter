@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "504850368418",
+    "firebase_url": "https://fir-flutter-8eeb0.firebaseio.com",
+    "project_id": "fir-flutter-8eeb0",
+    "storage_bucket": "fir-flutter-8eeb0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:504850368418:android:d3bdc9c4362fc3e21c94fb",
+        "android_client_info": {
+          "package_name": "inoutdelivey.com.demo_flutter"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "504850368418-ei8kg2qosjdb550mnku23ii6sngq9nr5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCNXkEE6-7v9bXayqgScSOZ3VW3tLxATec"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "504850368418-ei8kg2qosjdb550mnku23ii6sngq9nr5.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "504850368418-rgbp0fopf0emv533h3mfghamv2k21pk8.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.marketmix.demo-flutter"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
