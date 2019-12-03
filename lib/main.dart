@@ -2,18 +2,47 @@ import 'package:flutter/material.dart';
 import 'package:demo_flutter/map.dart';
 import 'package:demo_flutter/firebase.dart';
 import 'package:demo_flutter/rabbit.dart';
-// import 'package:onesignal_flutter/onesignal_flutter.dart';
+import 'package:onesignal_flutter/onesignal_flutter.dart';
+
+void _handleNotificationReceived(OSNotification notification) {
+  print("Notificación");
+}
 
 void main() {
-  // OneSignal.shared.init(
-  //   "789ac550-619e-4f1b-a0e5-175ae88b6841",
-  //   iOSSettings: {
-  //     OSiOSSettings.autoPrompt: false,
-  //     OSiOSSettings.inAppLaunchUrl: true
-  //   }
-  // );
-  // OneSignal.shared
-  //     .setInFocusDisplayType(OSNotificationDisplayType.notification);
+  OneSignal.shared.init("789ac550-619e-4f1b-a0e5-175ae88b6841", iOSSettings: {
+    OSiOSSettings.autoPrompt: true,
+    OSiOSSettings.inAppLaunchUrl: true
+  });
+  OneSignal.shared
+      .setInFocusDisplayType(OSNotificationDisplayType.notification);
+
+  OneSignal.shared
+      .setNotificationReceivedHandler((OSNotification notification) {
+    // will be called whenever a notification is received
+  });
+
+  OneSignal.shared
+      .setNotificationOpenedHandler((OSNotificationOpenedResult result) {
+    // will be called whenever a notification is opened/button pressed.
+  });
+
+  OneSignal.shared.setPermissionObserver((OSPermissionStateChanges changes) {
+    // will be called whenever the permission changes
+    // (ie. user taps Allow on the permission prompt in iOS)
+  });
+
+  OneSignal.shared
+      .setSubscriptionObserver((OSSubscriptionStateChanges changes) {
+    // will be called whenever the subscription changes
+    //(ie. user gets registered with OneSignal and gets a user ID)
+  });
+
+  OneSignal.shared.setEmailSubscriptionObserver(
+      (OSEmailSubscriptionStateChanges emailChanges) {
+    // will be called whenever then user's email subscription changes
+    // (ie. OneSignal.setEmail(email) is called and the user gets registered
+  });
+  OneSignal.shared.setNotificationReceivedHandler(_handleNotificationReceived);
 
   runApp(Aplication());
 }
