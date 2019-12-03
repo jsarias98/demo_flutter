@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>504850368418-rgbp0fopf0emv533h3mfghamv2k21pk8.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.504850368418-rgbp0fopf0emv533h3mfghamv2k21pk8</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBPdNj36LSPICDW5uodHj_6DLVo3pnQsGU</string>
+	<key>GCM_SENDER_ID</key>
+	<string>504850368418</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.marketmix.demo-flutter</string>
+	<key>PROJECT_ID</key>
+	<string>fir-flutter-8eeb0</string>
+	<key>STORAGE_BUCKET</key>
+	<string>fir-flutter-8eeb0.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:504850368418:ios:1dee4af8db4124a61c94fb</string>
+	<key>DATABASE_URL</key>
+	<string>https://fir-flutter-8eeb0.firebaseio.com</string>
+</dict>
+</plist>

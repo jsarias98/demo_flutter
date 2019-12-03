@@ -3,119 +3,113 @@ import "package:dart_amqp/dart_amqp.dart";
 import 'dart:async';
 import 'dart:io';
 import 'package:mqtt_client/mqtt_client.dart';
+import 'dart:math';
 
-final MqttClient client = MqttClient.withPort('wss://mq.inoutdelivery.com.co', 'dev-flutter/demo', 15676);
-
+String broker = 'wss://mq.inoutdelivery.com.co:15676/ws';
+final MqttClient client = MqttClient(broker, '');
 
 class rabbitState extends StatefulWidget {
   rabbitView createState() => rabbitView();
 }
 
 class rabbitView extends State<rabbitState> {
-  void onSubscribed(String topic) {
-    print('EXAMPLE::Subscription confirmed for topic $topic');
-  }
-  void onDisconnected() {
-    print('EXAMPLE::OnDisconnected client callback - Client disconnection');
-    if (client.connectionStatus.returnCode == MqttConnectReturnCode.solicited) {
-      print('EXAMPLE::OnDisconnected callback is solicited, this is correct');
-    }
-    exit(-1);
-  }
+  String username = 'inout';
+  String password = 'inout';
+  String clientId = 'connection_flutter_app';
+  String topic = 'demo/app/flutter';
 
-  /// The successful connect callback
-  void onConnected() {
-    print(
-        'EXAMPLE::OnConnected client callback - Client connection was sucessful');
-  }
-
-  /// Pong callback
-  void pong() {
-    print('EXAMPLE::Ping response client callback invoked');
-  }
   void _main() async {
-    /// A websocket URL must start with ws:// or wss:// or Dart will throw an exception, consult your websocket MQTT broker
-    /// for details.
-    /// To use websockets add the following lines -:
     client.useWebSocket = true;
-    /// client.port = 80;  ( or whatever your WS port is)
-    /// There is also an alternate websocket implementation for specialist use, see useAlternateWebSocketImplementation
-    /// Note do not set the secure flag if you are using wss, the secure flags is for TCP sockets only.
-    /// You can also supply your own websocket protocol list or disable this feature using the websocketProtocols
-    /// setter, read the API docs for further details here, the vast majority of brokers will support the client default
-    /// list so in most cases you can ignore this.
+    client.port = 15676;
+    client.logging(on: false);
+    client.keepAlivePeriod = 20;
 
-    /// Set logging on if needed, defaults to off
-    client.logging(on: true);
+    client.onDisconnected = () => print("CLiente desconectado");
 
-    /// If you intend to use a keep alive value in your connect message that is not the default(60s)
-    /// you must set it here
-    client.keepAlivePeriod = 30;
+    client.onConnected = () => print("Cliente conectado");
 
-    /// Add the unsolicited disconnection callback
-    client.onDisconnected = onDisconnected;
+    client.onSubscribed = (event) => print("Cliente susbcrito");
 
-    /// Add the successful connection callback
-    client.onConnected = onConnected;
+    client.pongCallback = () => print("CLiente Pong");
 
-    /// Add a subscribed callback, there is also an unsubscribed callback if you need it.
-    /// You can add these before connection or change them dynamically after connection if
-    /// you wish. There is also an onSubscribeFail callback for failed subscriptions, these
-    /// can fail either because you have tried to subscribe to an invalid topic or the broker
-    /// rejects the subscribe request.
-    client.onSubscribed = onSubscribed;
-    client.secure = false;
 
-    /// Set a ping received callback if needed, called whenever a ping response(pong) is received
-    /// from the broker.
-    client.pongCallback = pong;
-
-    /// Create a connection message to use or use the default one. The default one sets the
-    /// client identifier, any supplied username/password, the default keepalive interval(60s)
-    /// and clean session, an example of a specific one below.
     final MqttConnectMessage connMess = MqttConnectMessage()
-        .withClientIdentifier('4545')
-        .keepAliveFor(20) // Must agree with the keep alive set above or not set
-        .withWillTopic('willtopic') // If you set this you must set a will message
+        .withClientIdentifier(clientId)
+        .keepAliveFor(20)
+        .withWillTopic(topic)
         .withWillMessage('My Will message')
-        .startClean() // Non persistent session for testing
+        .startClean()
         .withWillQos(MqttQos.atLeastOnce);
     print('EXAMPLE::Mosquitto client connecting....');
     client.connectionMessage = connMess;
 
-    /// Connect the client, any errors here are communicated by raising of the appropriate exception. Note
-    /// in some circumstances the broker will just disconnect us, see the spec about this, we however eill
-    /// never send malformed messages.
     try {
-      await client.connect('tracking', r'Track2$0_19');
-      print('status.......: $client.connectionStatus');
+      await client.connect(username, password);
     } on Exception catch (e) {
       print('EXAMPLE::client exception - $e');
       client.disconnect();
     }
+
+    /// Check we are connected
     if (client.connectionStatus.state == MqttConnectionState.connected) {
       print('EXAMPLE::Mosquitto client connected');
     } else {
       /// Use status here rather than state if you also want the broker return code.
       print(
-          'EXAMPLE::ERROR Mosquitto client connection failed - disconnecting, status is ${client.connectionStatus}');
+          'EXAMPLE::ERROR Mosquitto client connection failed - disconnecting, status is ${client
+              .connectionStatus}');
       client.disconnect();
-      exit(-1);
     }
+
+    print('EXAMPLE::Subscribing to the ${ this.topic } topic');
+    client.subscribe(topic, MqttQos.atMostOnce);
+
+    this.topic = "new/topic/flutter";
+
+    print('EXAMPLE::Subscribing to the ${ this.topic } topic');
+    client.subscribe(topic, MqttQos.atMostOnce);
+
+
+    /*client.updates.listen((List<MqttReceivedMessage<MqttMessage>> c) {
+      final MqttPublishMessage recMess = c[0].payload;
+      final String pt =
+      MqttPublishPayload.bytesToStringAsString(recMess.payload.message);
+
+      /// The above may seem a little convoluted for users only interested in the
+      /// payload, some users however may be interested in the received publish message,
+      /// lets not constrain ourselves yet until the package has been in the wild
+      /// for a while.
+      /// The payload is a byte buffer, this will be specific to the topic
+      print(
+          'EXAMPLE::Change notification:: topic is <${c[0].topic}>, payload is <-- $pt -->');
+      print('');
+    });
+
+    client.published.listen((MqttPublishMessage message) {
+      print(
+          'EXAMPLE::Published notification:: topic is ${message.variableHeader.topicName}, with Qos ${message.header.qos}');
+    });
+
+    String pubTopic = this.topic;
+    final MqttClientPayloadBuilder builder = MqttClientPayloadBuilder();
+    builder.addString('Hello from mqtt_client');
+
+    client.publishMessage(pubTopic, MqttQos.exactlyOnce, builder.payload);
+    */
 
   }
 
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-      body:  Row(
+      body: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: <Widget>[
           RaisedButton(
             child: Text("rabbit"),
             onPressed: () {
-                _main();
-              },
+              _main();
+            },
             color: Colors.green,
             textColor: Colors.white,
             padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
