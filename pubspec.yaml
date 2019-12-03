@@ -23,6 +23,7 @@ dependencies:
   google_maps_flutter: ^0.5.21+12
   dart_amqp: ^0.1.4
   mqtt_client: ^5.2.0
+  onesignal_flutter: ^2.0.0
   flutter:
     sdk: flutter
 

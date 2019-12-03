@@ -2,12 +2,24 @@ import 'package:flutter/material.dart';
 import 'package:demo_flutter/map.dart';
 import 'package:demo_flutter/firebase.dart';
 import 'package:demo_flutter/rabbit.dart';
+// import 'package:onesignal_flutter/onesignal_flutter.dart';
 
-void main() => runApp(Aplication());
+void main() {
+  // OneSignal.shared.init(
+  //   "789ac550-619e-4f1b-a0e5-175ae88b6841",
+  //   iOSSettings: {
+  //     OSiOSSettings.autoPrompt: false,
+  //     OSiOSSettings.inAppLaunchUrl: true
+  //   }
+  // );
+  // OneSignal.shared
+  //     .setInFocusDisplayType(OSNotificationDisplayType.notification);
 
+  runApp(Aplication());
+}
 
 class Aplication extends StatelessWidget {
-  // This widget is the root of your application.
+  // This widget is the root of your application
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -37,13 +49,17 @@ class HomePage extends StatefulWidget {
 class HomeState extends State<HomePage> {
   final String title = 'Demo app Flutter';
   int _selectDrawerItem = 0;
-  _getDrawerItemWidget (int pos){
-    switch(pos){
-      case 0: return MapsSample();
-      case 1: return firebaseState();
-      case 2: return rabbitState();
+  _getDrawerItemWidget(int pos) {
+    switch (pos) {
+      case 0:
+        return MapsSample();
+      case 1:
+        return firebaseState();
+      case 2:
+        return rabbitState();
     }
   }
+
   _onSelectItem(int pos) {
     setState(() {
       _selectDrawerItem = pos;
@@ -80,15 +96,15 @@ class HomeState extends State<HomePage> {
             ),
             Divider(),
             ListTile(
-              onTap: (){
+              onTap: () {
                 Navigator.of(context).pop();
-              _onSelectItem(0);
+                _onSelectItem(0);
               },
               title: new Text("Mapa"),
               trailing: new Icon(Icons.arrow_forward_ios),
             ),
             ListTile(
-              onTap: (){
+              onTap: () {
                 Navigator.of(context).pop();
                 _onSelectItem(1);
               },
@@ -96,7 +112,7 @@ class HomeState extends State<HomePage> {
               trailing: new Icon(Icons.arrow_forward_ios),
             ),
             ListTile(
-              onTap: (){
+              onTap: () {
                 Navigator.of(context).pop();
                 _onSelectItem(2);
               },
@@ -109,6 +125,3 @@ class HomeState extends State<HomePage> {
     );
   }
 }
-
-
-
