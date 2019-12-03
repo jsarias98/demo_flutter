@@ -3,21 +3,23 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>17851590883-tqtq0t453mm0l2vjaaicarfchdu124en.apps.googleusercontent.com</string>
+	<string>504850368418-1ppcsr2rtspdilaidt8jdqhkdn1nltil.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.17851590883-tqtq0t453mm0l2vjaaicarfchdu124en</string>
+	<string>com.googleusercontent.apps.504850368418-1ppcsr2rtspdilaidt8jdqhkdn1nltil</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>504850368418-6n56t8fa80a3pjqgjp1ok8e6st3a34dn.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
-	<string>AIzaSyB07G6As491x4xSFRrLoxck6iPIrSgrxZg</string>
+	<string>AIzaSyBPdNj36LSPICDW5uodHj_6DLVo3pnQsGU</string>
 	<key>GCM_SENDER_ID</key>
-	<string>17851590883</string>
+	<string>504850368418</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>org.reactjs.native.example.configDemo</string>
+	<string>com.inoutdelivery.marketplace.dev</string>
 	<key>PROJECT_ID</key>
-	<string>mm-dev-54692</string>
+	<string>fir-flutter-8eeb0</string>
 	<key>STORAGE_BUCKET</key>
-	<string>mm-dev-54692.appspot.com</string>
+	<string>fir-flutter-8eeb0.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -29,8 +31,8 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:17851590883:ios:54ba4775293c1305683dd6</string>
+	<string>1:504850368418:ios:99426aa135835e9a1c94fb</string>
 	<key>DATABASE_URL</key>
-	<string>https://mm-dev-54692.firebaseio.com</string>
+	<string>https://fir-flutter-8eeb0.firebaseio.com</string>
 </dict>
 </plist>
