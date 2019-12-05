@@ -5,7 +5,6 @@ import 'package:google_sign_in/google_sign_in.dart';
 class firebaseState extends StatefulWidget{
   @override
   firebaseStateView createState() => firebaseStateView();
-
 }
 class firebaseStateView extends State<firebaseState> {
   final GoogleSignIn _googleSignIn = GoogleSignIn();

@@ -2,17 +2,24 @@ import 'package:flutter/material.dart';
 import 'package:demo_flutter/map.dart';
 import 'package:demo_flutter/firebase.dart';
 import 'package:demo_flutter/rabbit.dart';
+import 'package:demo_flutter/couchbase.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 
 void _handleNotificationReceived(OSNotification notification) {
   print("Notificación");
 }
 
-void main() {
+void main() async {
   OneSignal.shared.init("789ac550-619e-4f1b-a0e5-175ae88b6841", iOSSettings: {
-    OSiOSSettings.autoPrompt: true,
+    OSiOSSettings.autoPrompt: false,
     OSiOSSettings.inAppLaunchUrl: true
   });
+  try {
+    bool allowed = await OneSignal.shared.promptUserForPushNotificationPermission();
+    print(allowed);
+  } catch (e) {
+    
+  }
   OneSignal.shared
       .setInFocusDisplayType(OSNotificationDisplayType.notification);
 
@@ -76,7 +83,8 @@ class HomePage extends StatefulWidget {
 }
 
 class HomeState extends State<HomePage> {
-  final String title = 'Demo app Flutter';
+  
+  final String title = 'Demo app Flutters';
   int _selectDrawerItem = 0;
   _getDrawerItemWidget(int pos) {
     switch (pos) {
@@ -86,6 +94,8 @@ class HomeState extends State<HomePage> {
         return firebaseState();
       case 2:
         return rabbitState();
+      case 3:
+        return couchBase();
     }
   }
 
@@ -146,6 +156,14 @@ class HomeState extends State<HomePage> {
                 _onSelectItem(2);
               },
               title: new Text("Rabbit"),
+              trailing: new Icon(Icons.arrow_forward_ios),
+            ),
+            ListTile(
+              onTap: () {
+                Navigator.of(context).pop();
+                _onSelectItem(3);
+              },
+              title: new Text("couchBase"),
               trailing: new Icon(Icons.arrow_forward_ios),
             ),
           ],
